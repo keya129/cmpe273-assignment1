@@ -95,13 +95,21 @@ var w [5]string
 var x [5]string
 var vy [5]string
 var cmp [5]string
+var len1 [5]string
+
 sym:=strings.Split(symbols[inxf],",")
 var stockNames []string
+var stockNames1 []string
+
 for k:=0;k<len(sym);k++{
 	stockNames=strings.Split(sym[k],"$")
 	vy[k]=stockNames[0]
+	stockNames1=strings.Split(vy[k],":")
+	len1[k]=stockNames1[1]
+
 	cmp[k]=stockNames[1]
 }
+
 var senddetails string
 var maxsum float32
 maxsum=0
@@ -111,7 +119,9 @@ x[k]=v.([]interface{})[k].(map[string]interface{})["Bid"].(string)
 
 value1,err:=strconv.ParseFloat(cmp[k],32)
 value2,err:=strconv.ParseFloat(x[k],32)
-maxsum=maxsum+float32(value1)
+value3,err:=strconv.ParseFloat(len1[k],32)
+
+maxsum=maxsum+float32(value1*value3)
 
 if(value1>value2){
 	x[k]="+"+cmp[k]
